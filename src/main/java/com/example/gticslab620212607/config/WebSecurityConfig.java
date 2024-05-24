@@ -93,10 +93,8 @@ public class WebSecurityConfig {
 
 
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/mesas/list").hasAnyAuthority("CLIENTE", "GERENTE","ADMIN")
-                .requestMatchers("/personaje/new").hasAnyAuthority("CLIENTE", "GERENTE")
-                .requestMatchers("/personaje/edit").hasAnyAuthority("CLIENTE", "GERENTE")
-                .requestMatchers("/personaje/delete").hasAnyAuthority("CLIENTE")
+                .requestMatchers("/mesas","/mesas/**").hasAnyAuthority("CLIENTE", "GERENTE","ADMIN")
+                .requestMatchers("/reservas","/reservas/**").hasAnyAuthority("CLIENTE", "GERENTE")
                 .anyRequest().permitAll()
         )
         ;

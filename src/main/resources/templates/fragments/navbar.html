@@ -29,7 +29,7 @@
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyAuthority('GERENTE')">
                     <a class="nav-link" th:classappend="${active == 'Todas las reservas'?'active':''}"
-                       th:href="@{/totalreservas/list}">Todas las reservas</a>
+                       th:href="@{/reservas/list}">Todas las reservas</a>
                 </li>
 
             </ul>

@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+          crossorigin="anonymous">
+    <title>Mesas</title>
 </head>
 <body>
 
+
+<div style="padding-bottom: 15px;" class="container">
+
+    <h2 th:text="${mesas.id==0 || mesas.id == null ? 'Nueva mesa':'Editar Mesa #' + mesas.id}"></h2>
+    <form method="post" th:action="@{/mesas/save}" th:object="${mesas}">
+
+        <input th:field="*{id}" type="hidden"/>
+
+        <div class="form-group col-10">
+            <label >Nombre</label>
+            <input th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}"  type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Capacidad</label>
+            <input th:field="*{capacidad}" th:classappend="${#fields.hasErrors('capacidad')?'is-invalid':''}"  type="text" class="form-control" >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('capacidad')}" th:errors="*{capacidad}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Disponible</label>
+            <input th:field="*{disponible}" th:classappend="${#fields.hasErrors('disponible')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('disponible')}" th:errors="*{disponible}"></div>
+        </div>
+        <div class="form-group col-10">
+            <label >Ubicación</label>
+            <input th:field="*{ubicacion}" th:classappend="${#fields.hasErrors('ubicacion')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('ubicacion')}" th:errors="*{ubicacion}"></div>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary"
+                th:text="${mesas.id==0? 'Guardar':'Actualizar'}">Actualizar
+        </button>
+        <a th:href="@{/mesas/list}" class="btn btn-danger">Cancelar</a>
+    </form>
+</div>
 </body>
 </html>

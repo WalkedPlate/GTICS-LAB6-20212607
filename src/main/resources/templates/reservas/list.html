@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Reservas')}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Reservas')}"></nav>
+    <h2>Lista de mesas</h2>
+    <a sec:authorize="hasAnyAuthority('CLIENTE')" class="btn btn-primary mt-4 mb-4" th:href="@{'/reservas/new'}">Nueva Reserva</a>
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Usuario</th>
+            <th>Mesa</th>
+            <th>Fecha de inicio</th>
+            <th>Fecha de fin</th>
+
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reserva, info : ${listaReservas}">
+            <td th:text="${info.index + 1}"></td>
+            <td th:text="${reserva.usuario.nombre}"></td>
+            <td th:text="${reserva.mesas.nombre}"></td>
+            <td th:text="${reserva.fechaIn}"></td>
+            <td th:text="${reserva.fechaFin}"></td>
+
+            <td><a sec:authorize="hasAnyAuthority('CLIENTE')"  class="btn btn-primary" th:href="@{'/reservas/edit' + '?id=' + ${reserva.id}}">Editar</a>
+            </td>
+            <td><a sec:authorize="hasAnyAuthority('CLIENTE')"  class="btn btn-danger" th:href="@{'/reservas/delete' + '?id=' + ${reserva.id}}">Borrar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

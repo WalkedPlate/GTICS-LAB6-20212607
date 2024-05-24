@@ -1,7 +1,8 @@
 package com.example.gticslab620212607.controller;
 
 import com.example.gticslab620212607.entity.Mesas;
-import com.example.gticslab620212607.entity.Rol;
+import com.example.gticslab620212607.entity.Reservas;
+import com.example.gticslab620212607.entity.Usuario;
 import com.example.gticslab620212607.repository.MesasRepository;
 import com.example.gticslab620212607.repository.ReservasRepository;
 import com.example.gticslab620212607.repository.RolRepository;
@@ -17,12 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class MesasController {
+public class ReservasController {
 
     @Autowired
     MesasRepository mesasRepository;
@@ -34,24 +34,34 @@ public class MesasController {
     UsuarioRepository usuarioRepository;
 
 
-    @GetMapping(value = {"/mesas/list"})
+
+    @GetMapping(value = {"/reservas/list"})
     public String principal(Model model){
 
-        List<Mesas> listaMesas= mesasRepository.findAll();
+        model.addAttribute("listaReservas",reservasRepository.findAll());
+        return "reservas/list";
 
-        model.addAttribute("listaMesas",listaMesas);
-        return "mesas/list";
+        /*
+        Usuario cliente = usuarioRepository.findById(1).get();
+
+        if(cliente.getRol().getNombre().equalsIgnoreCase("CLIENTE")){
+            model.addAttribute("listaReservas",reservasRepository.findByUsuario(cliente));
+            return "reservas/list";
+        }
+        */
+
+
     }
 
 
 
-    @GetMapping("/mesas/new")
+    @GetMapping("/reservas/new")
     public String nuevo(Model model, @ModelAttribute("mesas") Mesas mesas) {
 
         return "mesas/frm";
     }
 
-    @GetMapping("/mesas/edit")
+    @GetMapping("/reservas/edit")
     public String editar(Model model, @RequestParam("id") int id, @ModelAttribute("mesas") Mesas mesas) {
 
         Optional<Mesas> optional = mesasRepository.findById(id);
@@ -65,10 +75,10 @@ public class MesasController {
         }
     }
 
-    @PostMapping("/mesas/save")
+    @PostMapping("/reservas/save")
     public String guardar(@ModelAttribute("mesas") @Valid Mesas mesas, BindingResult bindingResult,
-                                   RedirectAttributes attr,
-                                   Model model) {
+                          RedirectAttributes attr,
+                          Model model) {
 
         if(bindingResult.hasErrors()){
 
@@ -91,7 +101,7 @@ public class MesasController {
         }
     }
 
-    @GetMapping(value = {"/mesas/delete"})
+    @GetMapping(value = {"/reservas/delete"})
     public String borrar(@RequestParam("id") Integer id){
         Optional<Mesas> opt = mesasRepository.findById(id);
         if(opt.isPresent()){
@@ -99,7 +109,6 @@ public class MesasController {
         }
         return "redirect:/mesas/list";
     }
-
 
 
 }

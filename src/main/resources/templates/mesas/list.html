@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/navbar.html :: header( title = 'Mesas')}"></head>
 <body>
 <div class="container">
     <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Mesas')}"></nav>
     <h2>Lista de mesas</h2>
-    <a class="btn btn-primary mt-4 mb-4" th:href="@{'/mesas/new'}">Nueva Mesa</a>
+    <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary mt-4 mb-4" th:href="@{'/mesas/new'}">Nueva Mesa</a>
     <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
     <table class="table">
         <thead>
@@ -28,9 +30,9 @@
             <td th:text="${mesa.disponible}"></td>
             <td th:text="${mesa.ubicacion}"></td>
 
-            <td><a class="btn btn-primary" th:href="@{'/mesas/edit' + '?id=' + ${mesa.id}}">Editar</a>
+            <td><a sec:authorize="hasAnyAuthority('ADMIN')"  class="btn btn-primary" th:href="@{'/mesas/edit' + '?id=' + ${mesa.id}}">Editar</a>
             </td>
-            <td><a class="btn btn-danger" th:href="@{'/mesas/delete' + '?id=' + ${mesa.id}}">Borrar</a>
+            <td><a sec:authorize="hasAnyAuthority('ADMIN')"  class="btn btn-danger" th:href="@{'/mesas/delete' + '?id=' + ${mesa.id}}">Borrar</a>
             </td>
         </tr>
         </tbody>
