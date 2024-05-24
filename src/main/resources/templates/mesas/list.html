@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Mesas')}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Mesas')}"></nav>
+    <h2>Lista de mesas</h2>
+    <a class="btn btn-primary mt-4 mb-4" th:href="@{'/mesas/new'}">Nueva Mesa</a>
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Capacidad total</th>
+            <th>Cantidad disponible</th>
+            <th>Ubicacion</th>
+
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="mesa, info : ${listaMesas}">
+            <td th:text="${info.index + 1}"></td>
+            <td th:text="${mesa.nombre}"></td>
+            <td th:text="${mesa.capacidad}"></td>
+            <td th:text="${mesa.disponible}"></td>
+            <td th:text="${mesa.ubicacion}"></td>
+
+            <td><a class="btn btn-primary" th:href="@{'/mesas/edit' + '?id=' + ${mesa.id}}">Editar</a>
+            </td>
+            <td><a class="btn btn-danger" th:href="@{'/mesas/delete' + '?id=' + ${mesa.id}}">Borrar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>
