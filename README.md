@@ -11,3 +11,6 @@ passwordpablo
 ADMIN
 lucho@gmail.com
 passwordlucho
+
+
+Nota: el AMIN lucho no se loguea por alguna razón. Intentar cambiar la contraseña desde base de datos.
